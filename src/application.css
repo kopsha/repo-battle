@@ -1,0 +1,67 @@
+.main-title {
+    text-align: center;
+}
+
+.battle-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+.main-header {
+    background-color: #282c34;
+    min-height: 13vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.creator-link {
+    color: #61dafb;
+}
+
+.container {
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+    color: black;
+
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 21px;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+.btn-clear {
+    border: none;
+    background: transparent;
+}
+
+.nav-link {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+}
+
+.link-selected {
+    color: rgb(187, 46, 31);
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
