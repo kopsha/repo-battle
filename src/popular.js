@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {fetch_most_popular} from "./api"
+import {fetch_most_popular} from "./github_api"
 import {FaUser, FaStar, FaCodeBranch, FaExclamationTriangle} from "react-icons/fa"
 
 
