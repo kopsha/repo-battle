@@ -65,3 +65,61 @@ li {
     color: red;
     font-weight: bold;
 }
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
+.header-lg {
+    font-size: 34px;
+    font-weight: 300;
+    margin: 21px;
+}
+
+.avatar {
+    width: 144px;
+    height: 144px;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: block;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.link {
+    color: rgb(187, 46, 31);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.repo-cards {
+    margin: 21px 0;
+    font-size: 21px;
+}
+
+.repo-cards li {
+    display: flex;
+    align-items: center;
+    margin: 13px;
+}
+
+.repo-cards svg {
+    margin: 0 8px 0 13px;
+}
+
+.bg-light {
+    background: rgba(0,0,0, 0.08);
+    border-radius: 5px;
+}
+
+.repo {
+    margin: 13px 0;
+    width: 233px;
+}
