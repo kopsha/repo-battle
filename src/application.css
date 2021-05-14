@@ -51,7 +51,6 @@ li {
 }
 
 .nav-link {
-    font-size: 18px;
     font-weight: bold;
     text-decoration: none;
     color: inherit;
@@ -71,6 +70,16 @@ li {
     flex-wrap: wrap;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
 .space-around {
     justify-content: space-around;
 }
@@ -79,6 +88,12 @@ li {
     font-size: 34px;
     font-weight: 300;
     margin: 21px;
+}
+
+.header-sm {
+    font-size: 21px;
+    font-weight: 300;
+    margin: 13px;
 }
 
 .avatar {

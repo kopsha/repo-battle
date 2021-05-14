@@ -1,0 +1,173 @@
+import React from "react"
+import PropTypes from "prop-types"
+import {FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle} from "react-icons/fa"
+
+import "./battle.css"
+
+
+function Instructions() {
+    return (
+        <div className="instructions-container">
+            <h1 className="center-text header-lg">Instructions</h1>
+            <ol className="container-sm grid center-text battle-instructions">
+                <li>
+                    <h4 className="header-sm">Choose opponents</h4>
+                    <FaUserFriends className="bg-light" color="rgb(255, 191, 116)" size={89}/>
+                </li>
+                <li>
+                    <h4 className="header-sm">Fight</h4>
+                    <FaFighterJet className="bg-light" color="#727272" size={89}/>
+                </li>
+                <li>
+                    <h4 className="header-sm">See who won</h4>
+                    <FaTrophy className="bg-light" color="rgb(255, 215, 0)" size={89}/>
+                </li>
+            </ol>
+        </div>
+    )
+}
+
+
+class PlayerInput extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            username: "",
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleSubmit(event) {
+        event.preventDefault()
+        this.props.onSubmit(this.state.username)
+    }
+
+    handleChange(event) {
+        this.setState({username: event.target.value})
+    }
+
+    render() {
+        return (
+            <form className="column player" onSubmit={this.handleSubmit}>
+                <label htmlFor="username" className="player-label">
+                    {this.props.label}
+                </label>
+                <div className="row player-input">
+                    <input
+                        type="text"
+                        id="username"
+                        className="input-light"
+                        placeholder="github user"
+                        value={this.state.username}
+                        onChange={this.handleChange}
+                    />
+                    <button
+                        className="btn btn-dark"
+                        type="submit"
+                        disabled={!this.state.username}
+                    >
+                        Pick
+                    </button>
+                </div>
+            </form>
+        )
+    }
+}
+
+PlayerInput.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+}
+
+
+function OpponentPreview({label, username, onReset}) {
+    return (
+        <div className="column player">
+            <h3 className="player-label">{label}</h3>
+            <div className="row bg-light">
+                <div className="player-info">
+                    <img
+                        className="avatar-small"
+                        src={`https://github.com/${username}.png?size=55`}
+                        alt={`avatar for ${username}`}
+                        />
+                    <a className="hard-link"
+                        href={`https://github.com/${username}`}>
+                        {username}
+                    </a>
+                </div>
+                <button className="btn-clear flex-center" onClick={onReset}>
+                    <FaTimesCircle size={21}/>
+                </button>
+            </div>
+        </div>
+    )
+}
+OpponentPreview.propTypes = {
+    label: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    onReset: PropTypes.func.isRequired,
+}
+
+
+export default class Battle extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            playerOne: null,
+            playerTwo: null,
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleReset = this.handleReset.bind(this)
+    }
+    handleSubmit(id, player) {
+        this.setState({
+            [id]: player
+        })
+    }
+    handleReset(id) {
+        this.setState({
+            [id]: null
+        })
+    }
+    render() {
+        const {playerOne, playerTwo} = this.state
+        return (
+            <React.Fragment>
+                <Instructions />
+                <div className="opponents-container">
+                    <h1 className="center-text header-lg">Opposing forces</h1>
+                    <div className="row space-around">
+                        { (playerOne === null)
+                            ? <PlayerInput
+                                label="Left corner"
+                                onSubmit={(username) => this.handleSubmit("playerOne", username)}
+                                />
+                            : <OpponentPreview
+                                label="Left corner"
+                                username={playerOne}
+                                onReset={() => this.handleReset("playerOne")}
+                                />
+                        }
+                        { (playerTwo === null)
+                            ? <PlayerInput
+                                label="Right corner"
+                                onSubmit={(username) => this.handleSubmit("playerTwo", username)}
+                                />
+                            : <OpponentPreview
+                                label="Right corner"
+                                username={playerTwo}
+                                onReset={() => this.handleReset("playerTwo")}
+                                />
+                        }
+                    </div>
+                </div>
+            </React.Fragment>
+        )
+    }
+}

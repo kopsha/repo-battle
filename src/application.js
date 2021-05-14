@@ -1,5 +1,7 @@
 import "./application.css"
-import Popular from "./popular"
+
+// import Popular from "./popular"
+import Battle from "./battle"
 import React from "react"
 
 
@@ -12,7 +14,8 @@ function Main() {
                 </header>
             </div>
             <div className="container">
-                <Popular />
+                {/* <Popular /> */}
+                <Battle />
             </div>
         </React.Fragment>
     );
