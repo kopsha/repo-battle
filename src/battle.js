@@ -3,11 +3,12 @@ import PropTypes from "prop-types"
 import {FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle} from "react-icons/fa"
 
 import "./battle.css"
+import Results from "./results"
 
 
 function Instructions() {
     return (
-        <div className="instructions-container">
+        <div className="battle-container">
             <h1 className="center-text header-lg">Instructions</h1>
             <ol className="container-sm grid center-text battle-instructions">
                 <li>
@@ -140,7 +141,7 @@ export default class Battle extends React.Component {
         return (
             <React.Fragment>
                 <Instructions />
-                <div className="opponents-container">
+                <div className="battle-container">
                     <h1 className="center-text header-lg">Opposing forces</h1>
                     <div className="row space-around">
                         { (playerOne === null)
@@ -166,6 +167,11 @@ export default class Battle extends React.Component {
                                 />
                         }
                     </div>
+
+                    {playerOne && playerTwo && (
+                        <Results left={playerOne} right={playerTwo}/>
+                    )}
+
                 </div>
             </React.Fragment>
         )

@@ -41,7 +41,7 @@ function RepositoriesGrid ({repos}) {
                         <h2 className="center-text">
                             <a className="link" href={html_url}>{name}</a>
                         </h2>
-                        <ul className="repo-cards">
+                        <ul className="card">
                             <li><FaUser color="rgb(255, 191, 116)" size={22}/>{login}</li>
                             <li><FaStar color="rgb(255, 215, 0)" size={22}/>{stargazers_count.toLocaleString()} stars</li>
                             <li><FaCodeBranch color="rgb(129, 195, 245)" size={22}/>{forks.toLocaleString()} forks</li>

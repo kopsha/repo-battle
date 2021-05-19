@@ -114,18 +114,18 @@ li {
     font-weight: bold;
 }
 
-.repo-cards {
+.card {
     margin: 21px 0;
     font-size: 21px;
 }
 
-.repo-cards li {
+.card li {
     display: flex;
     align-items: center;
     margin: 13px;
 }
 
-.repo-cards svg {
+.card svg {
     margin: 0 8px 0 13px;
 }
 

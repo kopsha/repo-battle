@@ -1,4 +1,4 @@
-.instructions-container {
+.battle-container {
     margin: 89px 13px;
 }
 
@@ -76,10 +76,6 @@
 .btn-dark:disabled {
     color: #c7c7c7;
     background: #f2f2f2;
-}
-
-.opponents-container {
-    margin: 89px 13px;
 }
 
 .hard-link {
