@@ -1,55 +1,60 @@
 import React from "react"
-import {FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaCodeBranch, FaUser} from "react-icons/fa"
+import PropTypes from "prop-types"
+import {FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaStackOverflow, FaUser} from "react-icons/fa"
 
 import {fight} from "./github_api"
 
 
-function BattlefieldResult({label, player}) {
+function BattlefieldResult({label, profile, score}) {
     return (
         <div className="card bg-light">
             <h4 className="header-sm center-text">{label}</h4>
-            <img className="avatar" src={player.profile.avatar_url} alt={player.profile.name}/>
-            <p className="center-text">Score: {player.score.toLocaleString()}</p>
+            <img className="avatar" src={profile.avatar_url} alt={profile.name}/>
+            <p className="center-text">Score: {score.toLocaleString()}</p>
             <h3 className="center-text header-sm">
                 <a className="link"
-                    href={player.profile.html_url}>
-                    {player.profile.login}
+                    href={profile.html_url}>
+                    {profile.login}
                 </a>
             </h3>
             <ul>
                 <li>
                     <FaUser color="rgb(239, 115, 115)" size={21}/>
-                    {player.profile.name || "one has no name"}
+                    {profile.name || "one has no name"}
                 </li>
                 <li>
-                    <FaCodeBranch color="rgb(129, 195, 245)" size={21}/>
-                    {player.profile.public_repos.toLocaleString()} repositories
+                    <FaStackOverflow color="rgb(32, 64, 128)" size={21}/>
+                    {profile.public_repos.toLocaleString()} repositories
                 </li>
                 <li>
                     <FaUsers color="rgb(195, 129, 245)" size={21}/>
-                    {player.profile.followers.toLocaleString()} followers
+                    {profile.followers.toLocaleString()} followers
                 </li>
                 <li>
                     <FaUserFriends color="rgb(64, 183, 95)" size={21}/>
-                    {player.profile.following.toLocaleString()} following
+                    {profile.following.toLocaleString()} following
                 </li>
-                {player.profile.company && (
+                {profile.company && (
                     <li>
                         <FaBriefcase color="#795548" size={21}/>
-                        {player.profile.company}
+                        {profile.company}
                     </li>
                 )}
-                {player.profile.location && (
+                {profile.location && (
                     <li>
                         <FaCompass color="rgb(144, 115, 255)" size={21}/>
-                        {player.profile.location}
+                        {profile.location}
                     </li>
                 )}
             </ul>
         </div>
     )
 }
-
+BattlefieldResult.propTypes = {
+    label: PropTypes.string.isRequired,
+    profile: PropTypes.object.isRequired,
+    score: PropTypes.number.isRequired,
+}
 
 export default class Results extends React.Component {
     constructor(props) {
@@ -64,6 +69,9 @@ export default class Results extends React.Component {
     }
     componentDidMount() {
         const {left, right} = this.props
+        this.setState({
+            in_progress: true,
+        })
         fight([left, right])
             .then((players) => {
                 this.setState({
@@ -99,11 +107,13 @@ export default class Results extends React.Component {
                 <div className="grid space-around container-sm">
                     <BattlefieldResult
                         label={(winner.score === loser.score) ? "Tie" : "Winner"}
-                        player={winner}
+                        profile={winner.profile}
+                        score={winner.score}
                         />
                     <BattlefieldResult
-                        label={(winner.score === loser.score) ? "Tie" : "Looser"}
-                        player={loser}
+                        label={(winner.score === loser.score) ? "Tie" : "Loser"}
+                        profile={loser.profile}
+                        score={loser.score}
                     />
                 </div>
             </div>

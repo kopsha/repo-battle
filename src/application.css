@@ -123,10 +123,11 @@ li {
     display: flex;
     align-items: center;
     margin: 13px;
+    padding-right: 8px;
 }
 
 .card svg {
-    margin: 0 8px 0 13px;
+    margin: 0px 8px;
 }
 
 .bg-light {
