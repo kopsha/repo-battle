@@ -2,8 +2,34 @@ import React from "react"
 import PropTypes from "prop-types"
 import {FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaStackOverflow, FaUser} from "react-icons/fa"
 
-import {fight} from "./github_api"
+import {fetch_profile, fetch_repos} from "./github_api"
+import Loading from "./loading"
 
+
+function tallyUserScore(profile, repos) {
+    const stars = repos.reduce((acc, {stargazers_count}) => acc + stargazers_count, 0)
+    const forks = repos.reduce((acc, {forks_count}) => acc + forks_count, 0)
+    const watchers = repos.reduce((acc, {watchers_count}) => acc + watchers_count, 0)
+    return (
+        watchers + forks + stars
+        + profile.public_repos + profile.followers + profile.following
+    )
+}
+
+function fetch_user_data (username) {
+    return Promise.all([
+        fetch_profile(username),
+        fetch_repos(username),
+        new Promise(resolve => setTimeout(resolve, 3666)),
+    ]).then(([profile, repos]) => ({profile, score: tallyUserScore(profile, repos)}))
+}
+
+function fight(players) {
+    return Promise.all([
+        fetch_user_data(players[0]),
+        fetch_user_data(players[1])
+    ]).then((results) => results.sort((a, b) => b.score - a.score))
+}
 
 function BattlefieldResult({label, profile, score}) {
     return (
@@ -94,7 +120,7 @@ export default class Results extends React.Component {
         const {winner, loser, error, in_progress} = this.state
 
         if (in_progress) {
-            return <p>loading...</p>
+            return <Loading text="hold on"/>
         }
 
         if (error) {
