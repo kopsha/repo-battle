@@ -4,6 +4,7 @@ import {FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaStackOverflow, FaUser}
 
 import {fetch_profile, fetch_repos} from "./github_api"
 import Loading from "./loading"
+import Tooltip from "./tooltip"
 
 
 function tallyUserScore(profile, repos) {
@@ -20,7 +21,7 @@ function fetch_user_data (username) {
     return Promise.all([
         fetch_profile(username),
         fetch_repos(username),
-        new Promise(resolve => setTimeout(resolve, 3666)),
+        // new Promise(resolve => setTimeout(resolve, 3666)),
     ]).then(([profile, repos]) => ({profile, score: tallyUserScore(profile, repos)}))
 }
 
@@ -62,14 +63,18 @@ function BattlefieldResult({label, profile, score}) {
                 </li>
                 {profile.company && (
                     <li>
-                        <FaBriefcase color="#795548" size={21}/>
-                        {profile.company}
+                        <Tooltip text="User's company">
+                            <FaBriefcase color="#795548" size={21}/>
+                            {profile.company}
+                        </Tooltip>
                     </li>
                 )}
                 {profile.location && (
                     <li>
-                        <FaCompass color="rgb(144, 115, 255)" size={21}/>
-                        {profile.location}
+                        <Tooltip text="User's location">
+                            <FaCompass color="rgb(144, 115, 255)" size={21}/>
+                            {profile.location}
+                        </Tooltip>
                     </li>
                 )}
             </ul>

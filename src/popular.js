@@ -2,6 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import {fetch_most_popular} from "./github_api"
 import {FaUser, FaStar, FaCodeBranch, FaExclamationTriangle} from "react-icons/fa"
+import Loading from "./loading"
+import Tooltip from "./tooltip"
 
 
 function LanguagesNav ({selected, onSelectLanguage}) {
@@ -42,7 +44,12 @@ function RepositoriesGrid ({repos}) {
                             <a className="link" href={html_url}>{name}</a>
                         </h2>
                         <ul className="card">
-                            <li><FaUser color="rgb(255, 191, 116)" size={22}/>{login}</li>
+                            <li>
+                                <Tooltip text="github user">
+                                    <FaUser color="rgb(255, 191, 116)" size={22}/>
+                                    {login}
+                                </Tooltip>
+                            </li>
                             <li><FaStar color="rgb(255, 215, 0)" size={22}/>{stargazers_count.toLocaleString()} stars</li>
                             <li><FaCodeBranch color="rgb(129, 195, 245)" size={22}/>{forks.toLocaleString()} forks</li>
                             <li><FaExclamationTriangle color="rgb(241, 138, 147)" size={22}/>{open_issues.toLocaleString()} issues</li>
@@ -111,7 +118,7 @@ class Popular extends React.Component {
                     onSelectLanguage={this.selectLanguage}
                 />
 
-                {this.isLoading() && <p>loading...</p>}
+                {this.isLoading() && <Loading />}
 
                 {error_message && <p className="error-message">Houston, we've got a problem: {error_message}</p>}
 
