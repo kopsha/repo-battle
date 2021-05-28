@@ -2,36 +2,37 @@ import React from "react"
 import PropTypes from "prop-types"
 
 
-export default function withHover(Component) {
-    return class WithHover extends React.Component {
-        constructor(props) {
-            super(props)
+export default class WithHover extends React.Component {
+    constructor(props) {
+        super(props)
 
-            this.state = {
-                hovering: false,
-            }
-
-            this.mouseOver = this.mouseOver.bind(this)
-            this.mouseOut = this.mouseOut.bind(this)
-        }
-        mouseOver() {
-            this.setState({
-                hovering: true
-            })
-        }
-        mouseOut() {
-            this.setState({
-                hovering: false
-            })
+        this.state = {
+            hovering: false,
         }
 
-        render() {
-            const {hovering} = this.state
-            return (
-                <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
-                    <Component hovering={hovering} {...this.props}/>
-                </div>
-            )
-        }
+        this.mouseOver = this.mouseOver.bind(this)
+        this.mouseOut = this.mouseOut.bind(this)
     }
+    mouseOver() {
+        this.setState({
+            hovering: true
+        })
+    }
+    mouseOut() {
+        this.setState({
+            hovering: false
+        })
+    }
+
+    render() {
+        return (
+            <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
+                {this.props.children(this.state.hovering)}
+            </div>
+        )
+    }
+}
+
+WithHover.propTypes = {
+    children: PropTypes.func.isRequired,
 }
