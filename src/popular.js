@@ -1,10 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {fetch_most_popular} from "./github_api"
 import {FaUser, FaStar, FaCodeBranch, FaExclamationTriangle} from "react-icons/fa"
+
 import Loading from "./loading"
 import Tooltip from "./tooltip"
+import Card from "./card"
 
+import {fetch_most_popular} from "./github_api"
 
 function LanguagesNav ({selected, onSelectLanguage}) {
     const languages = ["All", "Python", "Ruby", "Haskell", "F#", "Clojure", "Elm", "Lisp", "JavaScript"]
@@ -37,23 +39,25 @@ function RepositoriesGrid ({repos}) {
                 const {login, avatar_url} = owner
 
                 return (
-                    <li key={html_url} className="repo bg-light">
-                        <h4 className="header-lg center-text">#{index + 1}</h4>
-                        <img className="avatar" src={avatar_url} alt={`${login}'s avatar.`}/>
-                        <h2 className="center-text">
-                            <a className="link" href={html_url}>{name}</a>
-                        </h2>
-                        <ul className="card">
-                            <li>
-                                <Tooltip text="github user">
-                                    <FaUser color="rgb(255, 191, 116)" size={22}/>
-                                    {login}
-                                </Tooltip>
-                            </li>
-                            <li><FaStar color="rgb(255, 215, 0)" size={22}/>{stargazers_count.toLocaleString()} stars</li>
-                            <li><FaCodeBranch color="rgb(129, 195, 245)" size={22}/>{forks.toLocaleString()} forks</li>
-                            <li><FaExclamationTriangle color="rgb(241, 138, 147)" size={22}/>{open_issues.toLocaleString()} issues</li>
-                        </ul>
+                    <li key={html_url}>
+                        <Card
+                            header={`#${index + 1}`}
+                            owner={name}
+                            owner_url={html_url}
+                            avatar_url={avatar_url}
+                        >
+                            <ul className="card-list">
+                                <li>
+                                    <Tooltip text="github user">
+                                        <FaUser color="rgb(255, 191, 116)" size={22}/>
+                                        {login}
+                                    </Tooltip>
+                                </li>
+                                <li><FaStar color="rgb(255, 215, 0)" size={22}/>{stargazers_count.toLocaleString()} stars</li>
+                                <li><FaCodeBranch color="rgb(129, 195, 245)" size={22}/>{forks.toLocaleString()} forks</li>
+                                <li><FaExclamationTriangle color="rgb(241, 138, 147)" size={22}/>{open_issues.toLocaleString()} issues</li>
+                            </ul>
+                        </Card>
                     </li>
                 )
             })}

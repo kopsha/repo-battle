@@ -5,6 +5,7 @@ import {FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaStackOverflow, FaUser}
 import {fetch_profile, fetch_repos} from "./github_api"
 import Loading from "./loading"
 import Tooltip from "./tooltip"
+import Card from "./card"
 
 
 function tallyUserScore(profile, repos) {
@@ -32,59 +33,46 @@ function fight(players) {
     ]).then((results) => results.sort((a, b) => b.score - a.score))
 }
 
-function BattlefieldResult({label, profile, score}) {
+function PlayerArsenal({profile}) {
     return (
-        <div className="card bg-light">
-            <h4 className="header-sm center-text">{label}</h4>
-            <img className="avatar" src={profile.avatar_url} alt={profile.name}/>
-            <p className="center-text">Score: {score.toLocaleString()}</p>
-            <h3 className="center-text header-sm">
-                <a className="link"
-                    href={profile.html_url}>
-                    {profile.login}
-                </a>
-            </h3>
-            <ul>
+        <ul className="card-list">
+            <li>
+                <FaUser color="rgb(239, 115, 115)" size={21}/>
+                {profile.name || "one has no name"}
+            </li>
+            <li>
+                <FaStackOverflow color="rgb(32, 64, 128)" size={21}/>
+                {profile.public_repos.toLocaleString()} repositories
+            </li>
+            <li>
+                <FaUsers color="rgb(195, 129, 245)" size={21}/>
+                {profile.followers.toLocaleString()} followers
+            </li>
+            <li>
+                <FaUserFriends color="rgb(64, 183, 95)" size={21}/>
+                {profile.following.toLocaleString()} following
+            </li>
+            {profile.company && (
                 <li>
-                    <FaUser color="rgb(239, 115, 115)" size={21}/>
-                    {profile.name || "one has no name"}
+                    <Tooltip text="User's company">
+                        <FaBriefcase color="#795548" size={21}/>
+                        {profile.company}
+                    </Tooltip>
                 </li>
+            )}
+            {profile.location && (
                 <li>
-                    <FaStackOverflow color="rgb(32, 64, 128)" size={21}/>
-                    {profile.public_repos.toLocaleString()} repositories
+                    <Tooltip text="User's location">
+                        <FaCompass color="rgb(144, 115, 255)" size={21}/>
+                        {profile.location}
+                    </Tooltip>
                 </li>
-                <li>
-                    <FaUsers color="rgb(195, 129, 245)" size={21}/>
-                    {profile.followers.toLocaleString()} followers
-                </li>
-                <li>
-                    <FaUserFriends color="rgb(64, 183, 95)" size={21}/>
-                    {profile.following.toLocaleString()} following
-                </li>
-                {profile.company && (
-                    <li>
-                        <Tooltip text="User's company">
-                            <FaBriefcase color="#795548" size={21}/>
-                            {profile.company}
-                        </Tooltip>
-                    </li>
-                )}
-                {profile.location && (
-                    <li>
-                        <Tooltip text="User's location">
-                            <FaCompass color="rgb(144, 115, 255)" size={21}/>
-                            {profile.location}
-                        </Tooltip>
-                    </li>
-                )}
-            </ul>
-        </div>
+            )}
+        </ul>
     )
 }
-BattlefieldResult.propTypes = {
-    label: PropTypes.string.isRequired,
+PlayerArsenal.propTypes = {
     profile: PropTypes.object.isRequired,
-    score: PropTypes.number.isRequired,
 }
 
 export default class Results extends React.Component {
@@ -136,16 +124,24 @@ export default class Results extends React.Component {
             <div className="battle-container">
                 <h1 className="center-text header-lg">Battlefield</h1>
                 <div className="grid space-around container-sm">
-                    <BattlefieldResult
-                        label={(winner.score === loser.score) ? "Tie" : "Winner"}
-                        profile={winner.profile}
-                        score={winner.score}
-                        />
-                    <BattlefieldResult
-                        label={(winner.score === loser.score) ? "Tie" : "Loser"}
-                        profile={loser.profile}
-                        score={loser.score}
-                    />
+                    <Card
+                        header={(winner.score === loser.score) ? "Tie" : "Winner"}
+                        subheader={winner.score}
+                        owner={winner.profile.login}
+                        owner_url={winner.profile.html_url}
+                        avatar_url={winner.profile.avatar_url}
+                    >
+                        <PlayerArsenal profile={winner.profile} />
+                    </Card>
+                    <Card
+                        header={(winner.score === loser.score) ? "Tie" : "Loser"}
+                        subheader={loser.score}
+                        owner={loser.profile.login}
+                        owner_url={loser.profile.html_url}
+                        avatar_url={loser.profile.avatar_url}
+                    >
+                        <PlayerArsenal profile={loser.profile} />
+                    </Card>
                 </div>
             </div>
         )
