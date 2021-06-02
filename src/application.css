@@ -54,6 +54,10 @@ li {
     color: inherit;
 }
 
+.nav li {
+    margin-right: 13px;
+}
+
 .link-selected {
     color: rgb(187, 46, 31);
 }
@@ -80,6 +84,10 @@ li {
 
 .space-around {
     justify-content: space-around;
+}
+
+.space-between {
+    justify-content: space-between;
 }
 
 .header-lg {
