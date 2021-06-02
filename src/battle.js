@@ -1,8 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import {FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle} from "react-icons/fa"
+import {Link} from "react-router-dom"
 
-import Results from "./results"
 import {ThemeConsumer} from "./theme"
 
 import "./battle.css"
@@ -20,7 +20,7 @@ function Instructions() {
                             <FaUserFriends className={`bg-${theme}`} color="rgb(255, 191, 116)" size={89}/>
                         </li>
                         <li>
-                            <h4 className="header-sm">Fight</h4>
+                            <h4 className="header-sm">Battle</h4>
                             <FaFighterJet className={`bg-${theme}`} color="#727272" size={89}/>
                         </li>
                         <li>
@@ -183,7 +183,15 @@ export default class Battle extends React.Component {
                     </div>
 
                     {playerOne && playerTwo && (
-                        <Results left={playerOne} right={playerTwo}/>
+                        <Link
+                            className="btn btn-dark btn-space"
+                            to={{
+                                pathname: "/battle/results",
+                                search: `?left=${playerOne}&right=${playerTwo}`
+                            }}
+                        >
+                            Battle
+                        </Link>
                     )}
 
                 </div>

@@ -5,6 +5,8 @@ import Popular from "./popular"
 import {ThemeProvider} from "./theme"
 import Navigator from "./navigator"
 import Battle from "./battle"
+import Results from "./results"
+
 
 import "./application.css"
 import "./theme.css"
@@ -31,7 +33,8 @@ class Main extends React.Component {
                         <div className="container">
                             <Navigator />
                             <Route exact path="/" component={Popular} />
-                            <Route path="/battle" component={Battle} />
+                            <Route exact path="/battle" component={Battle} />
+                            <Route path="/battle/results" component={Results} />
                         </div>
                     </div>
                 </ThemeProvider>

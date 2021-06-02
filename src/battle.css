@@ -58,7 +58,7 @@
 
 .btn {
     padding: 13px;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.15em;
     border-radius: 3px;
     border: none;
     font-size: 13px;
@@ -66,7 +66,11 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.btn-space {
+    margin: 34px auto;
 }
 
 .btn-dark {

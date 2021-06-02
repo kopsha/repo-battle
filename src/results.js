@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import {FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaStackOverflow, FaUser} from "react-icons/fa"
+import {Link} from "react-router-dom"
 
 import {fetch_profile, fetch_repos} from "./github_api"
 import Loading from "./loading"
@@ -87,7 +88,9 @@ export default class Results extends React.Component {
         }
     }
     componentDidMount() {
-        const {left, right} = this.props
+        const searchParams = new URLSearchParams(this.props.location.search)
+        const left = searchParams.get("left")
+        const right = searchParams.get("right")
         this.setState({
             in_progress: true,
         })
@@ -121,7 +124,7 @@ export default class Results extends React.Component {
         }
 
         return (
-            <div className="battle-container">
+            <React.Fragment>
                 <h1 className="center-text header-lg">Battlefield</h1>
                 <div className="grid space-around container-sm">
                     <Card
@@ -143,7 +146,8 @@ export default class Results extends React.Component {
                         <PlayerArsenal profile={loser.profile} />
                     </Card>
                 </div>
-            </div>
+                <Link to="/battle" className="btn btn-dark btn-space">CLEAR BODIES</Link>
+            </React.Fragment>
         )
     }
 }
