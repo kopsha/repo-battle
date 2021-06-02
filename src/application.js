@@ -1,5 +1,5 @@
 import React from "react"
-import {BrowserRouter, Route} from "react-router-dom"
+import {BrowserRouter, Route, Switch} from "react-router-dom"
 
 import Popular from "./popular"
 import {ThemeProvider} from "./theme"
@@ -32,9 +32,12 @@ class Main extends React.Component {
                     <div className={this.state.theme}>
                         <div className="container">
                             <Navigator />
-                            <Route exact path="/" component={Popular} />
-                            <Route exact path="/battle" component={Battle} />
-                            <Route path="/battle/results" component={Results} />
+                            <Switch>
+                                <Route exact path="/" component={Popular} />
+                                <Route exact path="/battle" component={Battle} />
+                                <Route path="/battle/results" component={Results} />
+                                <Route render={() => <h1>Not found. Keep trying!</h1>} />
+                            </Switch>
                         </div>
                     </div>
                 </ThemeProvider>
