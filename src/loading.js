@@ -13,17 +13,11 @@ const styling = {
 }
 
 export default class Loading extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            tick: 1,
-            content: props.text
-        }
-
-        this.advanceTick = this.advanceTick.bind(this)
+    state = {
+        tick: 0,
+        content: this.props.text
     }
-    advanceTick() {
+    advanceTick = () => {
         const dot = String.fromCharCode(183)
         const {tick} = this.state
         if (tick === 4) {

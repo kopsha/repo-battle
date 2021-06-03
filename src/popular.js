@@ -69,25 +69,17 @@ RepositoriesGrid.propTypes = {
 }
 
 
-class Popular extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            selected: "All",
-            repos: {},
-            error_message: null,
-        }
-
-        this.selectLanguage = this.selectLanguage.bind(this)
-        this.isLoading = this.isLoading.bind(this)
+export default class Popular extends React.Component {
+    state = {
+        selected: "All",
+        repos: {},
+        error_message: null,
     }
 
     componentDidMount() {
         this.selectLanguage(this.state.selected)
     }
-
-    selectLanguage(new_selection) {
+    selectLanguage = (new_selection) => {
         const {repos} = this.state
         this.setState({
             selected: new_selection,
@@ -107,12 +99,10 @@ class Popular extends React.Component {
                 .catch((error) => this.setState({error_message: error.message}))
         }
     }
-
-    isLoading() {
+    isLoading = () => {
         const {selected, repos, error_message} = this.state
         return !repos[selected] && error_message === null
     }
-
     render() {
         const {selected, repos, error_message} = this.state
         return (
@@ -131,5 +121,3 @@ class Popular extends React.Component {
         )
     }
 }
-
-export default Popular
