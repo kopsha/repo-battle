@@ -125,7 +125,7 @@ export default class Results extends React.Component {
                 <div className="grid space-around container-sm">
                     <Card
                         header={(winner.score === loser.score) ? "Tie" : "Winner"}
-                        subheader={winner.score}
+                        subheader={`${winner.score}`}
                         owner={winner.profile.login}
                         owner_url={winner.profile.html_url}
                         avatar_url={winner.profile.avatar_url}
@@ -134,7 +134,7 @@ export default class Results extends React.Component {
                     </Card>
                     <Card
                         header={(winner.score === loser.score) ? "Tie" : "Loser"}
-                        subheader={loser.score}
+                        subheader={`${loser.score}`}
                         owner={loser.profile.login}
                         owner_url={loser.profile.html_url}
                         avatar_url={loser.profile.avatar_url}

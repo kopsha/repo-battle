@@ -1,16 +1,15 @@
 import React from "react"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 
-import Popular from "./popular"
 import {ThemeProvider} from "./theme"
-import Navigator from "./navigator"
-import Battle from "./battle"
-import Results from "./results"
-
-
-import "./application.css"
 import "./theme.css"
+import "./application.css"
+import Loading from "./loading"
+import Navigator from "./navigator"
 
+const Popular = React.lazy(() => import("./popular"))
+const Battle = React.lazy(() => import("./battle"))
+const Results = React.lazy(() => import("./results"))
 
 class Main extends React.Component {
     state = {
@@ -28,12 +27,14 @@ class Main extends React.Component {
                     <div className={this.state.theme}>
                         <div className="container">
                             <Navigator />
-                            <Switch>
-                                <Route exact path="/" component={Popular} />
-                                <Route exact path="/battle" component={Battle} />
-                                <Route path="/battle/results" component={Results} />
-                                <Route render={() => <h1>Not found. Keep trying!</h1>} />
-                            </Switch>
+                            <React.Suspense fallback={<Loading />}>
+                                <Switch>
+                                    <Route exact path="/" component={Popular} />
+                                    <Route exact path="/battle" component={Battle} />
+                                    <Route path="/battle/results" component={Results} />
+                                    <Route render={() => <h1>Not found. Keep trying!</h1>} />
+                                </Switch>
+                            </React.Suspense>
                         </div>
                     </div>
                 </ThemeProvider>

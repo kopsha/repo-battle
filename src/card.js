@@ -30,7 +30,7 @@ export default function Card({
 Card.propTypes = {
     header: PropTypes.string.isRequired,
     subheader: PropTypes.string,
-    owner: PropTypes.object.isRequired,
-    owner_url: PropTypes.object.isRequired,
-    avatar_url: PropTypes.number.isRequired,
+    owner: PropTypes.string.isRequired,
+    owner_url: PropTypes.string.isRequired,
+    avatar_url: PropTypes.string.isRequired,
 }
