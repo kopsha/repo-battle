@@ -3,7 +3,7 @@
 // const secret = "Client Secret"
 // const params = `client_id=${client}&client_secret=${secret}`
 
-const api_root = "http://api.github.com"
+const api_root = "https://api.github.com"
 
 export function fetch_most_popular (language) {
     const query = "stars:>1" + (language ? " language:" + encodeURIComponent(language) : "")
